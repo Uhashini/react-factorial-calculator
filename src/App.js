@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+function factorial(n) {
+  let fact = 1;
+  for (let i = 1; i <= n; i++) {
+    fact *= i;
+  }
+  return fact;
+}
 
 function App() {
+  const [number, setNumber] = useState("");
+  const [result, setResult] = useState(null);
+
+  const calculateFactorial = () => {
+    const n = parseInt(number);
+
+    if (isNaN(n) || n < 0) {
+      setResult("Please enter a non-negative integer");
+      return;
+    }
+
+    const value = factorial(n);
+    setResult(value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Factorial Calculator</h1>
+
+      <input
+        type="number"
+        placeholder="Enter a number"
+        value={number}
+        onChange={(e) => setNumber(e.target.value)}
+      />
+
+      <br /><br />
+
+      <button onClick={calculateFactorial}>
+        Calculate
+      </button>
+
+      <br /><br />
+
+      {result !== null && <h2>Result: {result}</h2>}
     </div>
   );
 }
